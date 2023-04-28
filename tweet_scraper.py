@@ -1,5 +1,4 @@
 
-
 import selenium
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -45,23 +44,23 @@ search_box.send_keys(subject)
 search_box.send_keys(Keys.ENTER)
 sleep(3)
 driver.find_element_by_link_text('Latest').click()
-sonuc = []
+result = []
 twit = driver.find_elements_by_xpath("//div[@data-testid='tweetText']")
 sleep(2)
 print("------------------------------\n" + str(len(twit)) + "adet twit başarıyla çekildi \n------------------------------")
 for i in twit:
     while True :
         try:
-            sonuc.append(i.text)
+            result.append(i.text)
             break
         except StaleElementReferenceException:
             sleep(1)
             continue
 
-sayac = 0
+counter = 0
 son = driver.execute_script("return document.documentElement.scrollHeight")
 while True:
-    if sayac > 10 :
+    if counter > 10 :
         break
     driver.execute_script("window.scrollTo(0,document.documentElement.scrollHeight)")
     sleep(2)
@@ -69,16 +68,16 @@ while True:
     if son == yeni :
         break
     son = yeni
-    sayac += 1
+    counter += 1
     twit = driver.find_elements_by_xpath("//div[@data-testid='tweetText']")
     sleep(2)
-    print("------------------------------\n" + str(len(twit)) + "tweet was successfully sraped \n------------------------------")
+    print("------------------------------\n" + str(len(twit)) + "tweet was successfully scraped \n------------------------------")
     for i in twit:
          while True :
              
              
              try:
-                 sonuc.append(i.text)
+                 result.append(i.text)
                  break
              except StaleElementReferenceException:
                   sleep(1)
@@ -86,7 +85,7 @@ while True:
 
 adet = 1
 with open("tweets.csv","w",encoding="UTF-8") as file :
-    for a in sonuc :
+    for a in result :
         file.write(f"{adet} - {a}\n")
         adet += 1
-print("The tweets have been successfully saved in the tweets.txt file")
+print("The tweets have been successfully saved in the tweets.txt file")")
